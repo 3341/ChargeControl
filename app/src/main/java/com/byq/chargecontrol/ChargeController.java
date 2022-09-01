@@ -93,7 +93,12 @@ public class ChargeController implements PowerStatusParser.RefreshListener {
                         int temp = Math.round(powerStatusParser.getPowerTemp());
                         if (temp >= mConfig.stopTemp) { //超过温度限制
                             waitingToReduceTemp = true;
+                            Toasty.warning(context,"温度过高，禁用快充\n当前温度："+temp).show();
                             disableCharge();
+                        } else if (waitingToReduceTemp && temp <= mConfig.reduceToTemp) {
+                            waitingToReduceTemp = false;
+                            Toasty.info(context,"温度下降，恢复快充").show();
+                            resumeCharge();
                         }
                     }
                     if (!powerStatusParser.isUsbConnected() && originUsbDeviceConnect){

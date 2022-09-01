@@ -7,7 +7,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.FileIOUtils;
-import com.byq.applib.FileTools;
 import com.byq.applib.GsonTools;
 import com.byq.chargecontrol.shell.Terminator;
 import com.byq.chargecontrol.tools.TextINTool;
@@ -16,6 +15,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
+import java.io.InputStream;
+import java.util.Scanner;
 
 import es.dmoral.toasty.Toasty;
 
@@ -80,7 +81,16 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    String content = FileTools.readAssetsContent(SettingActivity.this,"autoCheckConfig.json");
+                    InputStream open = getAssets().open("autoCheckConfig.json");
+                    StringBuilder sb = new StringBuilder();
+                    Scanner scanner = new Scanner(open);
+                    while(scanner.hasNextLine()) {
+                        sb.append(scanner.nextLine());
+                    }
+                    if (sb.length()!=0) {
+                        sb.deleteCharAt(sb.length()-1);
+                    }
+                    open.close();
                     mConfigJsonEdit.setText(content);
                     mCommitButton.performClick();
                 } catch (Exception e) {
