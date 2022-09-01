@@ -4,6 +4,8 @@ public class MessageEvent {
     public static final int TRY_CALL_SERVICE = 63;
     public static final int TRY_RESPONSE_ACTIVTY = 991;
     public static final int UPDATE_CONFIG_FILE = 213;
+    public static final int REQUEST_DISABLE_CHARGE = 248;
+    public static final int REQUEST_ENABLE_CHARGE = 747;
     private int eventId;
     private Object data;
     private Object dataArray;

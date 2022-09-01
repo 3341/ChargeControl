@@ -35,6 +35,9 @@ public class MainService extends NotificationListenerService {
         //Initialize controller
         mChargeController = new ChargeController(MainService.this);
         mChargeController.initialize();
+
+        //向Activity发送广播
+        EventBus.getDefault().post(new MessageEvent(MessageEvent.TRY_RESPONSE_ACTIVTY));
     }
 
     @Override

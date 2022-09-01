@@ -45,9 +45,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView serviceStatus;
     private MaterialButton updateServiceStatus;
     private MaterialButton startService;
+    private MaterialButton settingButton;
+    private MaterialButton stopService;
     private MaterialButton pauseCharge;
     private MaterialButton resumeCharge;
     private MaterialButton disableOrEnableAutoCheck;
+    private TextView batterayStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +64,13 @@ public class MainActivity extends AppCompatActivity {
         serviceStatus = findViewById(R.id.serviceStatus);
         updateServiceStatus = findViewById(R.id.updateServiceStatus);
         startService = findViewById(R.id.startService);
+        settingButton = findViewById(R.id.settingButton);
+        stopService = findViewById(R.id.stopService);
         pauseCharge = findViewById(R.id.pauseCharge);
         resumeCharge = findViewById(R.id.resumeCharge);
         disableOrEnableAutoCheck = findViewById(R.id.disableOrEnableAutoCheck);
+        batterayStatus = findViewById(R.id.batterayStatus);
+
 
         releaseShellFile();
 
@@ -120,6 +127,43 @@ public class MainActivity extends AppCompatActivity {
         });
         powerStatusParser.refresh();
         powerStatusParser.startAutoRefreshThread(1000);
+
+        pauseCharge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mMainService != null) {
+                    EventBus.getDefault().post(new MessageEvent(MessageEvent.REQUEST_DISABLE_CHARGE));
+                } else {
+                    Toasty.error(MainActivity.this,"Service has not start").show();
+                }
+            }
+        });
+
+        resumeCharge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mMainService != null) {
+                    EventBus.getDefault().post(new MessageEvent(MessageEvent.REQUEST_ENABLE_CHARGE));
+                } else {
+                    Toasty.error(MainActivity.this,"Service has not start").show();
+                }
+            }
+        });
+
+        settingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,SettingActivity.class));
+            }
+        });
+
+        stopService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toasty.info(MainActivity.this,"请关闭通知权限以停止Service").show();
+                requestNotifyPermission();
+            }
+        });
     }
 
     @Override

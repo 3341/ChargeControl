@@ -95,16 +95,13 @@ public class PowerStatusParser {
 
     @Override
     public String toString() {
-        return "PowerStatusParser{" +
+        return
                 "lessPower=" + lessPower +
                 "\n currentNow=" + currentNow +
                 "\n powerTemp=" + powerTemp +
                 "\n isUsbConnected=" + isUsbConnected +
-                "\n refreshThread=" + refreshThread +
                 "\n refreshDelay=" + refreshDelay +
-                "\n errorMessage='" + errorMessage + '\'' +
-                "\n refreshListener=" + refreshListener +
-                '}';
+                "\n errorMessage='" + errorMessage + '\'' ;
     }
 
     public float getLessPower() {
