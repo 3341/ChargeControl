@@ -53,16 +53,27 @@ public class MainService extends NotificationListenerService {
     @Subscribe
     public void eventbusReceiver(MessageEvent event) {
         switch (event.getEventId()) {
-            case MessageEvent.TRY_CALL_SERVICE:
+            case MessageEvent.TRY_CALL_SERVICE: {
                 MessageEvent messageEvent = new MessageEvent(MessageEvent.TRY_RESPONSE_ACTIVTY);
                 messageEvent.setData(this);
                 //响应Activity的消息
                 EventBus.getDefault().post(messageEvent);
                 break;
+            }
 
-                case MessageEvent.UPDATE_CONFIG_FILE:
-                    mChargeController.initializeConfig();
-                    break;
+            case MessageEvent.UPDATE_CONFIG_FILE: {
+                mChargeController.initializeConfig();
+                Toasty.success(MainService.this, "已接收到Activity发来的更新消息").show();
+                break;
+            }
+
+            case MessageEvent.REQUEST_DISABLE_CHARGE:
+                mChargeController.disableCharge();
+                break;
+
+            case MessageEvent.REQUEST_ENABLE_CHARGE:
+                mChargeController.resumeCharge();
+                break;
         }
     }
 }
