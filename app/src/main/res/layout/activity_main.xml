@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="30dp"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:textColor="#4A4A4A"
+        android:text="充电控制" />
+
+<!--    Service状态-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:padding="20dp"
+        android:background="@drawable/stroke_bg"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/serviceStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="服务未连接" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:animateLayoutChanges="true"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="更新状态"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:id="@+id/updateServiceStatus"
+                app:icon="@drawable/ic_baseline_update_24"
+                app:iconGravity="textStart"
+                app:iconTint="@color/colorAccent"
+                android:textColor="@color/colorAccent"
+                app:backgroundTint="#63005B97"
+                app:cornerRadius="7dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="启动服务"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:id="@+id/startService"
+                app:icon="@drawable/ic_baseline_play_arrow_24"
+                app:iconGravity="textStart"
+                android:layout_marginLeft="10dp"
+                app:iconTint="@color/colorAccent"
+                android:textColor="@color/colorAccent"
+                app:backgroundTint="#63005B97"
+                app:cornerRadius="7dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+<!--    功能控制-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:padding="20dp"
+        android:background="@drawable/stroke_bg"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="功能控制" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:animateLayoutChanges="true"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="暂停充电"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:id="@+id/pauseCharge"
+                app:icon="@drawable/ic_baseline_stop_24"
+                app:iconGravity="textStart"
+                app:iconTint="@color/colorAccent"
+                android:textColor="@color/colorAccent"
+                app:backgroundTint="#63005B97"
+                app:cornerRadius="7dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="恢复充电"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:id="@+id/resumeCharge"
+                app:icon="@drawable/ic_baseline_play_arrow_24"
+                app:iconGravity="textStart"
+                android:layout_marginLeft="10dp"
+                app:iconTint="@color/colorAccent"
+                android:textColor="@color/colorAccent"
+                app:backgroundTint="#63005B97"
+                app:cornerRadius="7dp"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="禁用自动检测功能"
+            android:layout_marginTop="10dp"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:padding="0dp"
+            android:id="@+id/disableOrEnableAutoCheck"
+            app:icon="@drawable/ic_baseline_close_24"
+            app:iconGravity="textStart"
+            app:iconTint="@color/red"
+            android:textColor="@color/red"
+            app:backgroundTint="#43970000"
+            app:cornerRadius="7dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:padding="20dp"
+        android:background="@drawable/stroke_bg"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="电池状态" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+
+            <TextView
+                android:id="@+id/batterayStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#2D9700"
+                android:gravity="center_horizontal"
+                android:text="" />
+
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

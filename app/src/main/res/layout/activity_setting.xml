@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30dp"
+    tools:context=".SettingActivity">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:textColor="#4A4A4A"
+        android:text="设置" />
+
+
+    <!--    配置-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:padding="20dp"
+        android:background="@drawable/stroke_bg"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/ic_baseline_settings_24"
+                app:tint="@color/colorAccent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="配置" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:id="@+id/configJsonLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="250dp"
+                android:id="@+id/configJsonEdit"
+                android:hint="ConfigJson" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="重置配置"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:insetTop="0dp"
+                android:layout_marginTop="15dp"
+                android:insetBottom="0dp"
+                android:id="@+id/resetConfig"
+                android:padding="0dp"
+                android:textColor="@color/green"
+                app:icon="@drawable/ic_baseline_update_24"
+                app:iconTint="@color/green"
+                android:layout_marginRight="10dp"
+                app:iconGravity="textStart"
+                app:backgroundTint="#5E119102"
+                app:cornerRadius="7dp"/>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提交"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:insetTop="0dp"
+                android:layout_marginTop="15dp"
+                android:insetBottom="0dp"
+                android:id="@+id/commitButton"
+                android:padding="0dp"
+                android:textColor="@color/colorAccent"
+                app:icon="@drawable/ic_check_white_24dp"
+                app:iconTint="@color/colorAccent"
+                app:iconGravity="textStart"
+                app:backgroundTint="#4F005B97"
+                app:cornerRadius="7dp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+    </LinearLayout>
+
+    <!--    测试-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:padding="20dp"
+        android:background="@drawable/stroke_bg"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/ic_baseline_bug_report_24"
+                app:tint="@color/colorAccent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="测试" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:id="@+id/testErrorMessageLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="250dp"
+                android:id="@+id/testErrorMessageEdit"
+                android:hint="错误输出" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="horizontal">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="结束测试"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:insetTop="0dp"
+                android:layout_marginTop="15dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:id="@+id/stopTest"
+                android:textColor="@color/red"
+                app:icon="@drawable/ic_baseline_stop_24"
+                app:iconTint="@color/red"
+                app:iconGravity="textStart"
+                app:backgroundTint="#4A970000"
+                app:cornerRadius="7dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开始测试"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:insetTop="0dp"
+                android:layout_marginTop="15dp"
+                android:insetBottom="0dp"
+                android:id="@+id/startTest"
+                android:padding="0dp"
+                android:textColor="@color/green"
+                app:icon="@drawable/ic_baseline_play_arrow_24"
+                app:iconTint="@color/green"
+                android:layout_marginLeft="10dp"
+                app:iconGravity="textStart"
+                app:backgroundTint="#5E119102"
+                app:cornerRadius="7dp"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="慢速充电"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:insetTop="0dp"
+                android:layout_marginTop="15dp"
+                android:insetBottom="0dp"
+                android:padding="0dp"
+                android:id="@+id/lowCharge"
+                android:textColor="@color/red"
+                app:icon="@drawable/ic_baseline_power_24"
+                app:iconTint="@color/red"
+                app:iconGravity="textStart"
+                app:backgroundTint="#4A970000"
+                app:cornerRadius="7dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="快速充电"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:insetTop="0dp"
+                android:layout_marginTop="15dp"
+                android:insetBottom="0dp"
+                android:id="@+id/fastCharge"
+                android:padding="0dp"
+                android:textColor="@color/green"
+                app:icon="@drawable/ic_baseline_power_24"
+                app:iconTint="@color/green"
+                android:layout_marginLeft="10dp"
+                app:iconGravity="textStart"
+                app:backgroundTint="#5E119102"
+                app:cornerRadius="7dp"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

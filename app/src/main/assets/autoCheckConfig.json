@@ -1,0 +1,7 @@
+{
+  "dateRefreshDelay": 1000,
+  "stopTemp": 45,
+  "reduceToTemp": 40,
+  "checkCurrentMaxTime": 7000,
+  "fastChargeCurrent": 4000
+}
