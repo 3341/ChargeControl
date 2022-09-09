@@ -1,9 +1,14 @@
 package com.byq.chargecontrol;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.service.notification.NotificationListenerService;
 import android.util.Log;
+
+import com.byq.applib.broadcast.CommunicatBroadcastForReplay;
+import com.byq.applib.broadcast.CommunicateBroadcast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -15,7 +20,9 @@ import es.dmoral.toasty.Toasty;
  */
 public class MainService extends NotificationListenerService {
     private static final String TAG = BuildConfig.APPLICATION_ID;
+    private static final String EVENT_CHECK_REPEAT = "checkRepeat";
     private ChargeController mChargeController;
+    private boolean isServiceStarted;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -28,9 +35,37 @@ public class MainService extends NotificationListenerService {
     @Override
     public void onCreate() {
         super.onCreate();
-        Toasty.success(this,"Service Started.").show();
+        Handler handler = new Handler();
+        CommunicateBroadcast.sendBroadcast(this, EVENT_CHECK_REPEAT, new Intent(), new CommunicatBroadcastForReplay(EVENT_CHECK_REPEAT) {
+            @Override
+            public void onReplayReceived(Context context, Intent intent) {
+                Toasty.error(MainService.this,"重复Service，自动注销").show();
+            }
+
+            @Override
+            public long getReplayMaxDelay() {
+                return 1000;
+            }
+
+            @Override
+            public boolean onReceiveTimeout() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        startService();
+                    }
+                });
+
+                return false;
+            }
+        });
+    }
+
+    private void startService() {
+        isServiceStarted = true;
+        Toasty.success(MainService.this,"Service Started.").show();
         Log.i(TAG, "onCreate: MainService created.");
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(MainService.this);
 
         //Initialize controller
         mChargeController = new ChargeController(MainService.this);
@@ -38,16 +73,28 @@ public class MainService extends NotificationListenerService {
 
         //向Activity发送广播
         EventBus.getDefault().post(new MessageEvent(MessageEvent.TRY_RESPONSE_ACTIVTY));
+
+        CommunicateBroadcast communicateBroadcast = new CommunicateBroadcast() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                sendReplay(MainService.this,EVENT_CHECK_REPEAT,new Intent());
+            }
+        };
+        communicateBroadcast.addSupplyEvent(EVENT_CHECK_REPEAT);
+        communicateBroadcast.register(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mChargeController != null) {
-            mChargeController.terminate();
+        if (isServiceStarted) {
+            if (mChargeController != null) {
+                mChargeController.terminate();
+            }
+            Log.e(TAG, "onDestroy: Main service will be destroyed");
+            EventBus.getDefault().unregister(this);
         }
-        Log.e(TAG, "onDestroy: Main service will be destroyed");
-        EventBus.getDefault().unregister(this);
     }
 
     @Subscribe
