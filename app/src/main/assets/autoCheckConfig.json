@@ -2,6 +2,7 @@
   "dateRefreshDelay": 1000,
   "stopTemp": 45,
   "reduceToTemp": 40,
+  "maxPowerLess": 80,
   "checkCurrentMaxTime": 7000,
   "fastChargeCurrent": 4000
 }

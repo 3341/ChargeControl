@@ -1,6 +1,7 @@
 package com.byq.chargecontrol;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.ServiceUtils;
 import com.byq.applib.FileTools;
+import com.byq.applib.broadcast.CommunicatBroadcastForReplay;
+import com.byq.applib.broadcast.CommunicateBroadcast;
 import com.byq.chargecontrol.shell.Terminator;
 import com.google.android.material.button.MaterialButton;
 import com.lxj.xpopup.XPopup;
@@ -77,13 +80,54 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().post(new MessageEvent(MessageEvent.TRY_CALL_SERVICE));
 
         updateServiceStatus.setOnClickListener(new View.OnClickListener() {
+            private int count;
+
             @Override
             public void onClick(View view) {
+                count = 0;
                 EventBus.getDefault().post(new MessageEvent(MessageEvent.TRY_CALL_SERVICE));
                 boolean serviceRunning = ServiceUtils.isServiceRunning(MainService.class);
-                new XPopup.Builder(MainActivity.this)
-                        .asConfirm("查询结果","服务"+(serviceRunning?"正在运行中":"未运行"),null)
-                        .show();
+                LoadingPopupView querying = new XPopup.Builder(MainActivity.this)
+                        .asLoading("正在查询");
+                querying.show();
+
+                CommunicatBroadcastForReplay replay = new CommunicatBroadcastForReplay(MainService.EVENT_CHECK_REPEAT) {
+                    @Override
+                    public void onReplayReceived(Context context, Intent intent) {
+                        count++;
+                    }
+
+                    @Override
+                    public boolean isAutoUnregister() {
+                        return false;
+                    }
+
+                    @Override
+                    public long getReplayMaxDelay() {
+                        return 500;
+                    }
+
+                    @Override
+                    public boolean onReceiveTimeout() {
+                        return false;
+                    }
+                };
+                CommunicateBroadcast.sendBroadcast(MainActivity.this, MainService.EVENT_CHECK_REPEAT, new Intent(), replay);
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        querying.smartDismiss();
+                        replay.unregister();
+                        new XPopup.Builder(MainActivity.this)
+                                .asConfirm("查询结果","服务"+(serviceRunning?"正在运行中":"未运行")
+                                                +String.format("\n接收响应 %d 个",count)
+                                        ,null)
+                                .show();
+                    }
+                },1000);
+
+
             }
         });
 

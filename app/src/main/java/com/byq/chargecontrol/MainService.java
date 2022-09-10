@@ -20,7 +20,7 @@ import es.dmoral.toasty.Toasty;
  */
 public class MainService extends NotificationListenerService {
     private static final String TAG = BuildConfig.APPLICATION_ID;
-    private static final String EVENT_CHECK_REPEAT = "checkRepeat";
+    public static final String EVENT_CHECK_REPEAT = "checkRepeat";
     private ChargeController mChargeController;
     private boolean isServiceStarted;
 

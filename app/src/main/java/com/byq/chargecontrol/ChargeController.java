@@ -31,6 +31,7 @@ public class ChargeController implements PowerStatusParser.RefreshListener {
     private boolean hasRootPermission;
     private AutoCheckConfig mConfig;
     private Context context;
+    private float lastPowerLess; //上次检查时的电池电量
     private ErrorMessageReceiver errorMessageReceiver;
 
     public ErrorMessageReceiver getErrorMessageReceiver() {
@@ -91,7 +92,9 @@ public class ChargeController implements PowerStatusParser.RefreshListener {
                     }
                     if (powerStatusParser.isUsbConnected()) {
                         int temp = Math.round(powerStatusParser.getPowerTemp());
-                        if (temp >= mConfig.stopTemp && !waitingToReduceTemp) { //超过温度限制
+                        if (powerStatusParser.getLessPower() > mConfig.maxPowerLess && lastPowerLess < 80) {
+                            disableCharge();
+                        } else if (temp >= mConfig.stopTemp && !waitingToReduceTemp) { //超过温度限制
                             waitingToReduceTemp = true;
                             Toasty.warning(context,"温度过高，禁用快充\n当前温度："+temp).show();
                             disableCharge();
@@ -107,6 +110,7 @@ public class ChargeController implements PowerStatusParser.RefreshListener {
                         waitingToReduceTemp = false;
                     }
 
+                    lastPowerLess = powerStatusParser.getLessPower();
                     originUsbDeviceConnect = powerStatusParser.isUsbConnected();
                 }
             }

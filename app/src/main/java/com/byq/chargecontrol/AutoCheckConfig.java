@@ -18,4 +18,6 @@ public class AutoCheckConfig {
     public Integer checkCurrentMaxTime;
     @JsonProperty("fastChargeCurrent")
     public Integer fastChargeCurrent;
+    @JsonProperty("maxPowerLess")
+    public Integer maxPowerLess;
 }
