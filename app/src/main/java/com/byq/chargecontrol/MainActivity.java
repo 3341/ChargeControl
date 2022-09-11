@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.ServiceUtils;
 import com.byq.applib.FileTools;
 import com.byq.applib.broadcast.CommunicatBroadcastForReplay;
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                         .asLoading("正在查询");
                 querying.show();
 
-                CommunicatBroadcastForReplay replay = new CommunicatBroadcastForReplay(MainService.EVENT_CHECK_REPEAT) {
+                CommunicatBroadcastForReplay replay = new CommunicatBroadcastForReplay(MainService.EVENT_CHECK_REPEAT ) {
                     @Override
                     public void onReplayReceived(Context context, Intent intent) {
                         count++;
@@ -156,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        powerStatusParser = new PowerStatusParser();
+        powerStatusParser = new PowerStatusParser(this);
         powerStatusParser.setRefreshListener(new PowerStatusParser.RefreshListener() {
             @Override
             public void onRefresh(PowerStatusParser powerStatusParser) {
@@ -169,8 +170,12 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-        powerStatusParser.refresh();
+        powerStatusParser.refreshByBatteryManager(this);
         powerStatusParser.startAutoRefreshThread(1000);
+
+        File file = new File(PowerStatusParser.POWER_LESS_PATH);
+        String content = FileIOUtils.readFile2String(file);
+        Toasty.error(this,"Result: "+content).show();
 
         pauseCharge.setOnClickListener(new View.OnClickListener() {
             @Override

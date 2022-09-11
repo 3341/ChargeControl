@@ -179,9 +179,9 @@ public class ChargeController implements PowerStatusParser.RefreshListener {
     private void onAchievedRootPermission() {
         hasRootPermission = true;
         //Initialize the power status check thread
-        mPowerStatusParser = new PowerStatusParser();
+        mPowerStatusParser = new PowerStatusParser(context);
         mPowerStatusParser.setRefreshListener(this);
-        mPowerStatusParser.refresh();
+        mPowerStatusParser.refreshByBatteryManager(context);
         mPowerStatusParser.startAutoRefreshThread(mConfig.dateRefreshDelay);
         Log.i(TAG, "onCreate: initialize power status succeed.");
     }
