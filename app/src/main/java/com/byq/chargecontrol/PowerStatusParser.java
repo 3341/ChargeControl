@@ -211,15 +211,15 @@ public class PowerStatusParser {
         String s = readFile(POWER_TEMP);
         try {
             return Float.parseFloat(s) /10 ;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return -1;
     }
 
-    private int readTempByBroadcast(Context context) {
+    private float readTempByBroadcast(Context context) {
         Intent intent = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-        int intExtra = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE,-1);
+        float intExtra = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE,-1) / 10f;
         return intExtra;
     }
     
